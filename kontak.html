@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kontak</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+<body class="bg-gray-100">
+  <!-- Navbar -->
+  <nav class="bg-green-700 text-white">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <img src="logo.svg" alt="Logo" class="w-8 h-8">
+        <span class="font-bold text-xl">Smart Irrigation</span>
+      </div>
+      <div x-data="{ open: false }" class="md:hidden">
+        <button @click="open = !open">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            <path x-show="open" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <div x-show="open" class="absolute bg-green-700 text-white w-full left-0 mt-3 rounded-b shadow-md z-50">
+          <a href="index.html" class="block px-4 py-2 hover:bg-green-600">Beranda</a>
+          <a href="tentang.html" class="block px-4 py-2 hover:bg-green-600">Tentang Kami</a>
+          <a href="kontak.html" class="block px-4 py-2 bg-green-800">Kontak</a>
+        </div>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="index.html" class="hover:underline">Beranda</a>
+        <a href="tentang.html" class="hover:underline">Tentang Kami</a>
+        <a href="kontak.html" class="font-semibold bg-green-900 px-3 py-1 rounded-md">Kontak</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Konten -->
+  <main class="max-w-2xl mx-auto p-6 mt-6 bg-white rounded shadow">
+    <h1 class="text-2xl font-bold mb-4">Hubungi Kami</h1>
+    <p class="text-gray-700 mb-4">
+      Jika ada pertanyaan, saran, atau kerja sama, silakan hubungi kami melalui:
+    </p>
+    <ul class="text-gray-800 space-y-3">
+      <li>
+        📧 Email:
+        <a href="mailto:arifalfiaancanls@gmail.com" class="text-blue-600 hover:underline">
+          arifalfiaancanls@gmail.com
+        </a>
+      </li>
+      <li>
+        💬 WhatsApp:
+        <a
+          href="https://wa.me/62895617352225?text=Halo%20tim%20Smart%20Irrigation%2C%20saya%20ingin%20bertanya%20tentang%20sistem%20ini."
+          target="_blank"
+          class="text-green-600 hover:underline"
+        >
+          0895-6173-52225 (klik untuk chat)
+        </a>
+      </li>
+    </ul>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-10 text-center text-sm text-gray-500 p-4">
+    &copy; 2025 Smart Garden. Oleh Kelompok 3 4E Informatika UPGRIS
+  </footer>
+</body>
+</html>

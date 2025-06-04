@@ -1,0 +1,143 @@
+<!DOCTYPE html> 
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Garden</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+  <nav class="bg-green-700 text-white">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <img src="logo.svg" alt="Logo" class="w-8 h-8">
+        <span class="font-bold text-xl">Smart Garden</span>
+      </div>
+      <div x-data="{ open: false }" class="md:hidden">
+        <button @click="open = !open">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            <path x-show="open" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <div x-show="open" class="absolute bg-green-700 text-white w-full left-0 mt-3 rounded-b shadow-md z-50">
+          <a href="index.html" class="block px-4 py-2 bg-green-800"> Beranda</a>
+          <a href="tentang.html" class="block px-4 py-2 hover:bg-green-600">Tentang Kami</a>
+          <a href="kontak.html" class="block px-4 py-2 hover:bg-green-600">Kontak</a>
+        </div>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="index.html" class="font-semibold bg-green-900 px-3 py-1 rounded-md">Beranda</a>
+        <a href="tentang.html" class="hover:underline">Tentang Kami</a>
+        <a href="kontak.html" class="hover:underline">Kontak</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="text-center my-8">
+    <h1 class="text-3xl font-bold text-gray-800">Kelembapan & Status Pompa Air</h1>
+  </header>
+
+  <main class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+    <div class="bg-white rounded-lg shadow p-6 text-center">
+      <h2 class="text-lg font-semibold mb-2 text-green-800">Kelembapan Tanah:</h2>
+      <p id="soilMoisture" class="text-2xl font-bold">...</p>
+    </div>
+    <div class="bg-white rounded-lg shadow p-6 text-center">
+      <h2 class="text-lg font-semibold mb-2 text-green-800">Persentase Kelembapan:</h2>
+      <p id="moisturePercent" class="text-2xl font-bold">... %</p>
+    </div>
+    <div class="bg-white rounded-lg shadow p-6 text-center">
+      <h2 class="text-lg font-semibold mb-2 text-green-800">Status Pompa:</h2>
+      <p id="pumpStatus" class="text-2xl font-bold">...</p>
+    </div>
+  </main>
+  <header class="text-center my-8">
+    <h1 class="text-3xl font-bold text-gray-800">Suplai Air</h1>
+  </header>
+  <main class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+    <div class="bg-white rounded-lg shadow p-6 text-center">
+      <h2 class="text-lg font-semibold mb-2 text-green-800">Tinggi Air di Tangki(Maks 30 cm):</h2>
+      <p id="waterLevel" class="text-2xl font-bold">... cm</p>
+    </div>
+    <div class="bg-white rounded-lg shadow p-6 text-center">
+      <h2 class="text-lg font-semibold mb-2 text-green-800">Status Tangki Air</h2>
+      <p id="waterStatus" class="text-2xl font-bold">...</p>
+    </div>
+  </main>
+
+  <footer class="mt-10 text-center text-sm text-gray-500 p-4">
+    &copy; 2025 Smart Garden. Oleh Kelompok 3 4E Informatika UPGRIS
+  </footer>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyADy3dI_F2VckTKiSBeqh9BvnV8R2PtEpE",
+      authDomain: "irigation-monitoring.firebaseapp.com",
+      databaseURL: "https://irigation-monitoring-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "irigation-monitoring",
+      storageBucket: "irigation-monitoring.appspot.com",
+      messagingSenderId: "510423226058",
+      appId: "1:510423226058:web:214543306c97e7de6a4633"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const soilMoistureSpan = document.getElementById('soilMoisture');
+    const moisturePercentSpan = document.getElementById('moisturePercent');
+    const pumpStatusSpan = document.getElementById('pumpStatus');
+    const distanceSpan = document.getElementById('distance');
+    const waterLevelSpan = document.getElementById('waterLevel');
+    const waterStatusSpan = document.getElementById('waterStatus');
+
+    const MAX_TANK_HEIGHT = 30; // cm
+
+
+    function getSoilStatus(value) {
+      if (value >= 620) return "Sangat Kering";
+      else if (value >= 520) return "Kering";
+      else if (value <= 300) return "Lembap";
+      else return "Sangat Lembap";
+    }
+
+    const sensorRef = db.ref('sensor');
+
+    sensorRef.on('value', (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        soilMoistureSpan.textContent = getSoilStatus(data.soilMoisture);
+
+        moisturePercentSpan.textContent = `${data.moisturePercent} %`;
+
+        pumpStatusSpan.textContent = data.pumpStatus;
+        waterLevelSpan.textContent = `${data.waterLevel} cm`;
+
+        const waterLevel = parseFloat(data.waterLevel) || 0;
+        let waterPercent = Math.round((waterLevel / MAX_TANK_HEIGHT) * 100);
+        if (waterPercent < 0) waterPercent = 0;
+        if (waterPercent > 100) waterPercent = 100;
+
+        let waterStatus = "Tidak Diketahui";
+        if (waterPercent <= 0) {
+          waterStatus = "Kosong";
+        } else if (waterPercent < 20) {
+          waterStatus = "Hampir Habis";
+        } else if (waterPercent < 40) {
+          waterStatus = "Sedikit";
+        } else if (waterPercent < 75) {
+          waterStatus = "Sedang";
+        } else if (waterPercent < 100) {
+          waterStatus = "Hampir Penuh";
+        } else {
+          waterStatus = "Penuh";
+        }
+
+        waterStatusSpan.textContent = `${waterStatus} (${waterPercent}%)`;
+      }
+    });
+  </script>
+</body>
+</html>

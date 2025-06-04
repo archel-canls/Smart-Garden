@@ -1,0 +1,80 @@
+<!DOCTYPE html> 
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tentang Kami</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+<body class="bg-gray-100 font-sans">
+  <nav class="bg-green-700 text-white">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <img src="logo.svg" alt="Logo" class="w-8 h-8">
+        <span class="font-bold text-xl">Smart Garden</span>
+      </div>
+      <div x-data="{ open: false }" class="md:hidden">
+        <button @click="open = !open">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            <path x-show="open" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <div x-show="open" class="absolute bg-green-700 text-white w-full left-0 mt-3 rounded-b shadow-md z-50">
+          <a href="index.html" class="block px-4 py-2 hover:bg-green-600">Beranda</a>
+          <a href="tentang.html" class="block px-4 py-2 bg-green-800">Tentang Kami</a>
+          <a href="kontak.html" class="block px-4 py-2 hover:bg-green-600">Kontak</a>
+        </div>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="index.html" class="hover:underline">Beranda</a>
+        <a href="tentang.html" class="font-semibold bg-green-900 px-3 py-1 rounded-md">Tentang Kami</a>
+        <a href="kontak.html" class="hover:underline">Kontak</a>
+      </div>
+    </div>
+  </nav>
+  <header class="text-center my-8">
+    <h1 class="text-3xl font-bold text-gray-800">Tentang Kami</h1>
+  </header>
+  <main class="max-w-2xl mx-auto p-6 mt-6 bg-white rounded shadow">
+    <h1 class="text-2xl font-bold mb-4">Smart Garden</h1>
+    <p class="text-gray-700 leading-relaxed space-y-4">
+      <strong>Smart Garden</strong> adalah sistem penyiraman otomatis yang dirancang khusus untuk kebutuhan rumah tangga, seperti taman kecil, kebun rumah, pot tanaman di halaman, maupun tanaman hias. Sistem ini bertujuan untuk mempermudah pemilik rumah dalam merawat tanaman dengan cara yang efisien, hemat air, dan berbasis teknologi.
+      <br><br>
+
+      Sistem ini bekerja dengan menggunakan sensor kelembapan tanah yang akan mendeteksi kadar air di dalam tanah secara otomatis. Jika kelembapan tanah terdeteksi kering, maka sistem akan menyalakan pompa air atau katup penyiram secara otomatis, sehingga tanaman akan tetap sehat tanpa perlu disiram secara manual setiap hari.
+      <br><br>
+
+      <strong>Fitur Utama:</strong>
+      <ul class="list-disc list-inside mt-2 mb-4 text-gray-700">
+        <li> Deteksi kelembapan tanah secara otomatis</li>
+        <li> Penyiraman otomatis saat tanah kering</li>
+        <li> Mode penyiraman manual via web (opsional)</li>
+        <li> Tampilan status sensor dan pompa di halaman web</li>
+        <li> Hemat energi dan mudah dipasang di rumah</li>
+      </ul>
+
+      <strong>Manfaat Sistem:</strong>
+      <ul class="list-disc list-inside mt-2 mb-4 text-gray-700">
+        <li> Tanaman lebih terawat meski pemilik sibuk atau bepergian</li>
+        <li> Menghemat air dengan penyiraman sesuai kebutuhan</li>
+        <li> Mudah dipantau dari HP atau laptop atau perangkat lain</li>
+        <li> Cocok untuk penghobi tanaman dan urban farming</li>
+      </ul>
+
+      <strong>Oleh Kelompok 3, Kelas 4E, Informatika UPGRIS:</strong>
+      <ul class="list-disc list-inside mt-2 mb-4 text-gray-700">
+        <li> Arif Alfian Choirul Anwar (23670119)</li>
+        <li> Kelvin Bintang Ardiansyah (23670148)</li>
+        <li> Alivia Nuraida (23670132)</li>
+        <li> Siti Muawanah (23670099)</li>
+      </ul>
+    </p>
+  </main>
+
+  <footer class="mt-10 text-center text-sm text-gray-500 p-4">
+    &copy; 2025 Smart Irrigation Monitoring. Oleh Kelompok 3 4E Informatika UPGRIS
+  </footer>
+</body>
+</html>
