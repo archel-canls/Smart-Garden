@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>   
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
@@ -10,17 +10,32 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body class="bg-gray-100 font-sans">
-  <!-- Navbar -->
   <nav class="bg-green-700 text-white">
     <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
       <div class="flex items-center space-x-3">
         <img src="logo.svg" alt="Logo" class="w-8 h-8">
         <span class="font-bold text-xl">Smart Garden</span>
       </div>
+      <div x-data="{ open: false }" class="md:hidden">
+        <button @click="open = !open">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            <path x-show="open" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <div x-show="open" class="absolute bg-green-700 text-white w-full left-0 mt-3 rounded-b shadow-md z-50">
+          <a href="index.html" class="block px-4 py-2 bg-green-800"> Beranda</a>
+          <a href="tentang.html" class="block px-4 py-2 hover:bg-green-600">Tentang Kami</a>
+          <a href="kontak.html" class="block px-4 py-2 hover:bg-green-600">Kontak</a>
+        </div>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="index.html" class="font-semibold bg-green-900 px-3 py-1 rounded-md">Beranda</a>
+        <a href="tentang.html" class="hover:underline">Tentang Kami</a>
+        <a href="kontak.html" class="hover:underline">Kontak</a>
+      </div>
     </div>
-  </nav>
-
-  <!-- Monitor Status Indicator -->
+  </nav> <!-- Monitor Status Indicator -->
   <div class="flex justify-center items-center mt-4 space-x-4">
     <div class="flex items-center space-x-2">
       <div id="statusDot" class="w-4 h-4 rounded-full bg-yellow-500 animate-pulse"></div>
