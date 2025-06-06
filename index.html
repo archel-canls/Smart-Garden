@@ -102,13 +102,13 @@
     const statusDot = document.getElementById('statusDot');
     const statusText = document.getElementById('statusText');
 
-    const MAX_TANK_HEIGHT = 30; // cm
+    const MAX_TANK_HEIGHT = 26; // cm
     let lastUpdateTimestamp = 0;
 
     function getSoilStatus(value) {
-      if (value >= 620) return "Sangat Kering";
-      else if (value >= 520) return "Kering";
-      else if (value <= 300) return "Lembap";
+      if (value <= 372) return "Sangat Kering";
+      else if (value <= 733) return "Kering";
+      else if (value <= 950) return "Lembap";
       else return "Sangat Lembap";
     }
 
@@ -166,7 +166,7 @@
 
     setInterval(() => {
       const now = Date.now();
-      if (now - lastUpdateTimestamp > 5000) {
+      if (now - lastUpdateTimestamp > 4000) {
         setStatusActive(false);
       }
     }, 1000);
