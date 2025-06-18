@@ -1,0 +1,181 @@
+<!DOCTYPE html>   
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Garden</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+  <nav class="bg-green-700 text-white">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <img src="logo.png" alt="Logo" class="w-8 h-8">
+        <span class="font-bold text-xl">Smart Garden</span>
+      </div>
+      <div x-data="{ open: false }" class="md:hidden">
+        <button @click="open = !open">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            <path x-show="open" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <div x-show="open" class="absolute bg-green-700 text-white w-full left-0 mt-3 rounded-b shadow-md z-50">
+          <a href="monitor.html" class="block px-4 py-2 bg-green-800"> Beranda</a>
+          <a href="tentang.html" class="block px-4 py-2 hover:bg-green-600">Tentang Kami</a>
+          <a href="kontak.html" class="block px-4 py-2 hover:bg-green-600">Kontak</a>
+        </div>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="index.html" class="font-semibold bg-green-900 px-3 py-1 rounded-md">Beranda</a>
+        <a href="tentang.html" class="hover:underline">Tentang Kami</a>
+        <a href="kontak.html" class="hover:und  erline">Kontak</a>
+      </div>
+    </div>
+  </nav> 
+  <!-- Monitor Status Indicator -->
+<div class="px-4">
+  <div class="flex justify-between items-center mt-4 max-w-6xl mx-auto flex-wrap gap-2 sm:gap-4">
+    <div class="flex items-center space-x-2">
+      <div id="statusDot" class="w-4 h-4 rounded-full bg-yellow-500 animate-pulse"></div>
+      <span id="statusText" class="font-semibold text-gray-700">Memuat status monitor...</span>
+    </div>
+    <div class="text-sm text-gray-500" id="lastUpdateText">(Terakhir update: -)</div>
+  </div>
+</div>
+
+
+  <!-- Judul -->
+  <header class="text-center my-8">
+    <h1 class="text-3xl font-bold text-gray-800">Kelembapan & Status Pompa Air</h1>
+  </header>
+
+  <!-- Data Sensor -->
+  <main class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+    <div class="bg-white rounded-lg shadow p-6 text-center">
+      <h2 class="text-lg font-semibold mb-2 text-green-800">Kelembapan Tanah:</h2>
+      <p id="soilMoisture" class="text-2xl font-bold">...</p>
+    </div>
+    <div class="bg-white rounded-lg shadow p-6 text-center">
+      <h2 class="text-lg font-semibold mb-2 text-green-800">Persentase Kelembapan:</h2>
+      <p id="moisturePercent" class="text-2xl font-bold">... %</p>
+    </div>
+    <div class="bg-white rounded-lg shadow p-6 text-center">
+      <h2 class="text-lg font-semibold mb-2 text-green-800">Status Pompa:</h2>
+      <p id="pumpStatus" class="text-2xl font-bold">...</p>
+    </div>
+  </main>
+
+  <!-- Suplai Air -->
+  <header class="text-center my-8">
+    <h1 class="text-3xl font-bold text-gray-800">Suplai Air</h1>
+  </header>
+
+  <main class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+    <div class="bg-white rounded-lg shadow p-6 text-center">
+      <h2 class="text-lg font-semibold mb-2 text-green-800">Tinggi Air di Tangki (Maks 22 cm):</h2>
+      <p id="waterLevel" class="text-2xl font-bold">... cm</p>
+    </div>
+    <div class="bg-white rounded-lg shadow p-6 text-center">
+      <h2 class="text-lg font-semibold mb-2 text-green-800">Status Tangki Air:</h2>
+      <p id="waterStatus" class="text-2xl font-bold">...</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-10 text-center text-sm text-gray-500 p-4">
+    &copy; 2025 Smart Garden. Oleh Kelompok 3 4E Informatika UPGRIS
+  </footer>
+
+  <!-- Script Firebase & Monitoring -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyADy3dI_F2VckTKiSBeqh9BvnV8R2PtEpE",
+      authDomain: "irigation-monitoring.firebaseapp.com",
+      databaseURL: "https://irigation-monitoring-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "irigation-monitoring",
+      storageBucket: "irigation-monitoring.appspot.com",
+      messagingSenderId: "510423226058",
+      appId: "1:510423226058:web:214543306c97e7de6a4633"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const sensorRef = db.ref('sensor');
+
+    const soilMoistureSpan = document.getElementById('soilMoisture');
+    const moisturePercentSpan = document.getElementById('moisturePercent');
+    const pumpStatusSpan = document.getElementById('pumpStatus');
+    const waterLevelSpan = document.getElementById('waterLevel');
+    const waterStatusSpan = document.getElementById('waterStatus');
+    const statusDot = document.getElementById('statusDot');
+    const statusText = document.getElementById('statusText');
+    const lastUpdateText = document.getElementById('lastUpdateText');
+
+    const MAX_TANK_HEIGHT = 22; // cm
+    let lastSensorTime = null;
+    let lastPumpStatus = "...";
+
+    function getSoilStatus(value) {
+      if (value <= 372) return "Sangat Kering";
+      else if (value <= 733) return "Kering";
+      else if (value <= 950) return "Lembap";
+      else return "Sangat Lembap";
+    }
+
+    function updateMonitorStatus(isOnline) {
+      if (isOnline) {
+        statusDot.className = "w-4 h-4 rounded-full bg-green-500";
+        statusText.textContent = "Monitor: On";
+      } else {
+        statusDot.className = "w-4 h-4 rounded-full bg-red-500";
+        statusText.textContent = "Monitor: Off";
+        // Tidak hapus pumpStatusSpan
+      }
+    }
+
+    sensorRef.on('value', (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const now = new Date();
+        lastSensorTime = new Date(data.tahun, data.bulan - 1, data.tanggal, data.jam, data.menit, data.detik);
+        const lastFormatted = `${data.hari}, ${String(data.tanggal).padStart(2, '0')}/${String(data.bulan).padStart(2, '0')}/${data.tahun} ${String(data.jam).padStart(2, '0')}:${String(data.menit).padStart(2, '0')}:${String(data.detik).padStart(2, '0')}`;
+        lastUpdateText.textContent = `(Terakhir update: ${lastFormatted})`;
+
+        soilMoistureSpan.textContent = getSoilStatus(data.soilMoisture);
+        moisturePercentSpan.textContent = `${data.moisturePercent} %`;
+        pumpStatusSpan.textContent = data.pumpStatus;
+        lastPumpStatus = data.pumpStatus; // simpan status pompa terakhir
+        waterLevelSpan.textContent = `${data.waterLevel} cm`;
+
+        const waterPercent = Math.min(Math.max(Math.round((parseFloat(data.waterLevel) / MAX_TANK_HEIGHT) * 100), 0), 100);
+        let waterStatus = "Tidak Diketahui";
+        if (waterPercent <= 0) waterStatus = "Kosong";
+        else if (waterPercent < 20) waterStatus = "Hampir Habis";
+        else if (waterPercent < 40) waterStatus = "Sedikit";
+        else if (waterPercent < 75) waterStatus = "Sedang";
+        else if (waterPercent < 100) waterStatus = "Hampir Penuh";
+        else waterStatus = "Penuh";
+
+        waterStatusSpan.textContent = `${waterStatus} (${waterPercent}%)`;
+      }
+    });
+
+    // Cek status ESP tiap 1 detik
+    setInterval(() => {
+      if (!lastSensorTime) return;
+      const now = new Date();
+      const diffSec = (now - lastSensorTime) / 1000;
+      const isOnline = diffSec <= 15;
+      updateMonitorStatus(isOnline);
+
+      // Tetap tampilkan status pompa terakhir saat offline
+      if (!isOnline) {
+        pumpStatusSpan.textContent = lastPumpStatus;
+      }
+    }, 1000);
+  </script>
+</body>
+</html>

@@ -1,181 +1,207 @@
-<!DOCTYPE html>   
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smart Garden</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Smart Garden - Cover Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <style>
+        /* Gaya font kustom */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap'); /* Font Oswald untuk teks modern */
+
+        body {
+            /* Background gradasi bergelombang hijau dan akuamarin cerah */
+            background: linear-gradient(135deg, #2ecc71, #1abc9c, #27ae60, #16a085, #2ecc71);
+            background-size: 150% 150%;
+            animation: gradientWaveAnimation 8s ease infinite;
+            font-family: 'Oswald', sans-serif; /* Font modern untuk seluruh teks */
+            color: #ffffff; /* Warna teks putih untuk kontras yang kuat */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow-y: auto;
+            overflow-x: hidden;
+            position: relative;
+            padding: 5vh 2rem; /* Padding lebih sedikit di atas dan bawah */
+        }
+
+        /* Animasi gradasi bergelombang */
+        @keyframes gradientWaveAnimation {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 0% 50%; }
+            75% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Overlay untuk menambah kontras teks */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3); /* Overlay sedikit lebih gelap */
+            z-index: 0;
+        }
+
+        body > *:not(script) {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        /* Jarak logo dengan judul diatur menjadi sangat dekat */
+        .logo-header-container {
+            margin-bottom: 0.5rem; /* Jarak sangat dekat */
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif; /* Font judul tetap Playfair Display */
+            color: #f0f0f0; /* Warna judul lebih terang */
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5); /* Bayangan lebih kuat */
+            letter-spacing: 0.1em; /* Spasi huruf lebih lebar */
+            margin-bottom: 1rem; /* Jarak dengan deskripsi */
+        }
+
+        p {
+            color: #e0e0e0; /* Warna deskripsi lebih terang */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+            font-size: 1.1rem; /* Ukuran font lebih besar */
+        }
+
+        h2 {
+            color: #a0c4ff; /* Warna judul sub-bagian */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+            margin-top: 1.5rem; /* Jarak atas lebih besar */
+        }
+
+        ul li {
+            color: #f0f0f0; /* Warna list */
+            font-weight: 500;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #f47c3c, #f39c12); /* Warna tombol lebih cerah */
+            box-shadow: 0 4px 15px rgba(244, 124, 60, 0.5);
+            transition: all 0.3s ease;
+            border: none;
+            color: #fff;
+            padding: 1rem 2.5rem; /* Ukuran tombol lebih besar */
+            font-size: 1.2rem; /* Ukuran font tombol lebih besar */
+        }
+
+        .cta-button:hover {
+            transform: scale(1.1) translateY(-5px); /* Efek hover lebih dramatis */
+            box-shadow: 0 6px 20px rgba(244, 124, 60, 0.7);
+            background: linear-gradient(45deg, #f39c12, #f47c3c);
+        }
+
+        .logo-upgris-header {
+            width: 70px;
+            height: 80px;
+        }
+
+        .logo-informatika-header {
+            width: 120px;
+            height: 45px;
+        }
+
+        /* Responsivitas untuk ukuran layar yang lebih kecil */
+        @media (max-width: 768px) {
+            body {
+                padding: 3vh 1.5rem;
+            }
+            h1 {
+                font-size: 2.5rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+            .cta-button {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+            .logo-upgris-header {
+                width: 50px;
+                height: 60px;
+            }
+            .logo-informatika-header {
+                width: 80px;
+                height: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 2vh 1rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            p {
+                font-size: 0.9rem;
+            }
+            .cta-button {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            .logo-image {
+                width: 90px;
+                height: 90px;
+            }
+            .logo-upgris-header {
+                width: 40px;
+                height: 50px;
+            }
+            .logo-informatika-header {
+                width: 60px;
+                height: 20px;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-100 font-sans">
-  <nav class="bg-green-700 text-white">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-      <div class="flex items-center space-x-3">
-        <img src="logo.svg" alt="Logo" class="w-8 h-8">
-        <span class="font-bold text-xl">Smart Garden</span>
-      </div>
-      <div x-data="{ open: false }" class="md:hidden">
-        <button @click="open = !open">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            <path x-show="open" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-        <div x-show="open" class="absolute bg-green-700 text-white w-full left-0 mt-3 rounded-b shadow-md z-50">
-          <a href="index.html" class="block px-4 py-2 bg-green-800"> Beranda</a>
-          <a href="tentang.html" class="block px-4 py-2 hover:bg-green-600">Tentang Kami</a>
-          <a href="kontak.html" class="block px-4 py-2 hover:bg-green-600">Kontak</a>
-        </div>
-      </div>
-      <div class="hidden md:flex space-x-6">
-        <a href="index.html" class="font-semibold bg-green-900 px-3 py-1 rounded-md">Beranda</a>
-        <a href="tentang.html" class="hover:underline">Tentang Kami</a>
-        <a href="kontak.html" class="hover:und  erline">Kontak</a>
-      </div>
+<body class="font-sans">
+
+    <div class="logo-header-container flex justify-center items-center space-x-6">
+        <img src="logo_upgris.png" alt="Logo UPGRIS" class="logo-upgris-header">
+        <img src="logo_informatika.png" alt="Logo Informatika" class="logo-informatika-header">
     </div>
-  </nav> 
-  <!-- Monitor Status Indicator -->
-<div class="px-4">
-  <div class="flex justify-between items-center mt-4 max-w-6xl mx-auto flex-wrap gap-2 sm:gap-4">
-    <div class="flex items-center space-x-2">
-      <div id="statusDot" class="w-4 h-4 rounded-full bg-yellow-500 animate-pulse"></div>
-      <span id="statusText" class="font-semibold text-gray-700">Memuat status monitor...</span>
+
+    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+        SMART GARDEN
+    </h1>
+
+    <p class="text-lg md:text-2xl">
+        Sistem Penyiraman Otomatis Berbasis IoT
+    </p>
+
+    <img src="logo.png" alt="Logo Smart Garden" class="logo-image w-32 h-32 md:w-40 md:h-40 mx-auto transform transition-transform duration-500 hover:scale-110">
+    
+    <div class="mb-10 text-base md:text-xl">
+        <h2 class="font-semibold text-2xl md:text-3xl">Dosen Pembimbing:</h2>
+        <ul class="list-none p-0 m-0 space-y-2 mb-4">
+            <p class="text-lg md:text-2xl">Noora Qotrun Nada, S.T., M.Eng
+            </p>
+        <h2 class="font-semibold text-2xl md:text-3xl">Kelompok 3(4E)</h2>
+        <ul class="list-none p-0 m-0 space-y-2">
+            <li>Arif Alfian Choirul Anwar (23670119)</li>
+            <li>Kelvin Bintang Ardiansyah (23670148)</li>
+            <li>Alivia Nuraida (23670132)</li>
+            <li>Siti Muawanah (23670099)</li>
+        </ul>
     </div>
-    <div class="text-sm text-gray-500" id="lastUpdateText">(Terakhir update: -)</div>
-  </div>
-</div>
+    
+    <a href="monitor.html" class="cta-button inline-block text-white font-bold transition duration-300 ease-in-out">
+        MASUK KE MONITOR
+    </a>
 
-
-  <!-- Judul -->
-  <header class="text-center my-8">
-    <h1 class="text-3xl font-bold text-gray-800">Kelembapan & Status Pompa Air</h1>
-  </header>
-
-  <!-- Data Sensor -->
-  <main class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
-    <div class="bg-white rounded-lg shadow p-6 text-center">
-      <h2 class="text-lg font-semibold mb-2 text-green-800">Kelembapan Tanah:</h2>
-      <p id="soilMoisture" class="text-2xl font-bold">...</p>
-    </div>
-    <div class="bg-white rounded-lg shadow p-6 text-center">
-      <h2 class="text-lg font-semibold mb-2 text-green-800">Persentase Kelembapan:</h2>
-      <p id="moisturePercent" class="text-2xl font-bold">... %</p>
-    </div>
-    <div class="bg-white rounded-lg shadow p-6 text-center">
-      <h2 class="text-lg font-semibold mb-2 text-green-800">Status Pompa:</h2>
-      <p id="pumpStatus" class="text-2xl font-bold">...</p>
-    </div>
-  </main>
-
-  <!-- Suplai Air -->
-  <header class="text-center my-8">
-    <h1 class="text-3xl font-bold text-gray-800">Suplai Air</h1>
-  </header>
-
-  <main class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
-    <div class="bg-white rounded-lg shadow p-6 text-center">
-      <h2 class="text-lg font-semibold mb-2 text-green-800">Tinggi Air di Tangki (Maks 22 cm):</h2>
-      <p id="waterLevel" class="text-2xl font-bold">... cm</p>
-    </div>
-    <div class="bg-white rounded-lg shadow p-6 text-center">
-      <h2 class="text-lg font-semibold mb-2 text-green-800">Status Tangki Air:</h2>
-      <p id="waterStatus" class="text-2xl font-bold">...</p>
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="mt-10 text-center text-sm text-gray-500 p-4">
-    &copy; 2025 Smart Garden. Oleh Kelompok 3 4E Informatika UPGRIS
-  </footer>
-
-  <!-- Script Firebase & Monitoring -->
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyADy3dI_F2VckTKiSBeqh9BvnV8R2PtEpE",
-      authDomain: "irigation-monitoring.firebaseapp.com",
-      databaseURL: "https://irigation-monitoring-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "irigation-monitoring",
-      storageBucket: "irigation-monitoring.appspot.com",
-      messagingSenderId: "510423226058",
-      appId: "1:510423226058:web:214543306c97e7de6a4633"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-    const sensorRef = db.ref('sensor');
-
-    const soilMoistureSpan = document.getElementById('soilMoisture');
-    const moisturePercentSpan = document.getElementById('moisturePercent');
-    const pumpStatusSpan = document.getElementById('pumpStatus');
-    const waterLevelSpan = document.getElementById('waterLevel');
-    const waterStatusSpan = document.getElementById('waterStatus');
-    const statusDot = document.getElementById('statusDot');
-    const statusText = document.getElementById('statusText');
-    const lastUpdateText = document.getElementById('lastUpdateText');
-
-    const MAX_TANK_HEIGHT = 22; // cm
-    let lastSensorTime = null;
-    let lastPumpStatus = "...";
-
-    function getSoilStatus(value) {
-      if (value <= 372) return "Sangat Kering";
-      else if (value <= 733) return "Kering";
-      else if (value <= 950) return "Lembap";
-      else return "Sangat Lembap";
-    }
-
-    function updateMonitorStatus(isOnline) {
-      if (isOnline) {
-        statusDot.className = "w-4 h-4 rounded-full bg-green-500";
-        statusText.textContent = "Monitor: On";
-      } else {
-        statusDot.className = "w-4 h-4 rounded-full bg-red-500";
-        statusText.textContent = "Monitor: Off";
-        // Tidak hapus pumpStatusSpan
-      }
-    }
-
-    sensorRef.on('value', (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        const now = new Date();
-        lastSensorTime = new Date(data.tahun, data.bulan - 1, data.tanggal, data.jam, data.menit, data.detik);
-        const lastFormatted = `${data.hari}, ${String(data.tanggal).padStart(2, '0')}/${String(data.bulan).padStart(2, '0')}/${data.tahun} ${String(data.jam).padStart(2, '0')}:${String(data.menit).padStart(2, '0')}:${String(data.detik).padStart(2, '0')}`;
-        lastUpdateText.textContent = `(Terakhir update: ${lastFormatted})`;
-
-        soilMoistureSpan.textContent = getSoilStatus(data.soilMoisture);
-        moisturePercentSpan.textContent = `${data.moisturePercent} %`;
-        pumpStatusSpan.textContent = data.pumpStatus;
-        lastPumpStatus = data.pumpStatus; // simpan status pompa terakhir
-        waterLevelSpan.textContent = `${data.waterLevel} cm`;
-
-        const waterPercent = Math.min(Math.max(Math.round((parseFloat(data.waterLevel) / MAX_TANK_HEIGHT) * 100), 0), 100);
-        let waterStatus = "Tidak Diketahui";
-        if (waterPercent <= 0) waterStatus = "Kosong";
-        else if (waterPercent < 20) waterStatus = "Hampir Habis";
-        else if (waterPercent < 40) waterStatus = "Sedikit";
-        else if (waterPercent < 75) waterStatus = "Sedang";
-        else if (waterPercent < 100) waterStatus = "Hampir Penuh";
-        else waterStatus = "Penuh";
-
-        waterStatusSpan.textContent = `${waterStatus} (${waterPercent}%)`;
-      }
-    });
-
-    // Cek status ESP tiap 1 detik
-    setInterval(() => {
-      if (!lastSensorTime) return;
-      const now = new Date();
-      const diffSec = (now - lastSensorTime) / 1000;
-      const isOnline = diffSec <= 15;
-      updateMonitorStatus(isOnline);
-
-      // Tetap tampilkan status pompa terakhir saat offline
-      if (!isOnline) {
-        pumpStatusSpan.textContent = lastPumpStatus;
-      }
-    }, 1000);
-  </script>
 </body>
 </html>
