@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -206,4 +207,214 @@
     </a>
 
 </body>
+=======
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Smart Garden - Cover Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <style>
+        /* Gaya font kustom */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap'); /* Font Oswald untuk teks modern */
+
+        body {
+            /* Background gradasi bergelombang hijau dan akuamarin cerah */
+            background: linear-gradient(135deg, #2ecc71, #1abc9c, #27ae60, #16a085, #2ecc71);
+            background-size: 150% 150%;
+            animation: gradientWaveAnimation 8s ease infinite;
+            font-family: 'Oswald', sans-serif; /* Font modern untuk seluruh teks */
+            color: #ffffff; /* Warna teks putih untuk kontras yang kuat */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow-y: auto;
+            overflow-x: hidden;
+            position: relative;
+            padding: 5vh 2rem; /* Padding lebih sedikit di atas dan bawah */
+        }
+
+        /* Animasi gradasi bergelombang */
+        @keyframes gradientWaveAnimation {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 0% 50%; }
+            75% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Overlay untuk menambah kontras teks */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3); /* Overlay sedikit lebih gelap */
+            z-index: 0;
+        }
+
+        body > *:not(script) {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        /* Jarak logo dengan judul diatur menjadi sangat dekat */
+        .logo-header-container {
+            margin-bottom: 0.5rem; /* Jarak sangat dekat */
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif; /* Font judul tetap Playfair Display */
+            color: #f0f0f0; /* Warna judul lebih terang */
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5); /* Bayangan lebih kuat */
+            letter-spacing: 0.1em; /* Spasi huruf lebih lebar */
+            margin-bottom: 1rem; /* Jarak dengan deskripsi */
+        }
+
+        p {
+            color: #e0e0e0; /* Warna deskripsi lebih terang */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+            font-size: 1.1rem; /* Ukuran font lebih besar */
+        }
+
+        h2 {
+            color: #a0c4ff; /* Warna judul sub-bagian */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+            margin-top: 1.5rem; /* Jarak atas lebih besar */
+        }
+
+        ul li {
+            color: #f0f0f0; /* Warna list */
+            font-weight: 500;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #f47c3c, #f39c12); /* Warna tombol lebih cerah */
+            box-shadow: 0 4px 15px rgba(244, 124, 60, 0.5);
+            transition: all 0.3s ease;
+            border: none;
+            color: #fff;
+            padding: 1rem 2.5rem; /* Ukuran tombol lebih besar */
+            font-size: 1.2rem; /* Ukuran font tombol lebih besar */
+        }
+
+        .cta-button:hover {
+            transform: scale(1.1) translateY(-5px); /* Efek hover lebih dramatis */
+            box-shadow: 0 6px 20px rgba(244, 124, 60, 0.7);
+            background: linear-gradient(45deg, #f39c12, #f47c3c);
+        }
+
+        .logo-upgris-header {
+            width: 70px;
+            height: 80px;
+        }
+
+        .logo-informatika-header {
+            width: 120px;
+            height: 45px;
+        }
+
+        /* Responsivitas untuk ukuran layar yang lebih kecil */
+        @media (max-width: 768px) {
+            body {
+                padding: 3vh 1.5rem;
+            }
+            h1 {
+                font-size: 2.5rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+            .cta-button {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+            .logo-upgris-header {
+                width: 50px;
+                height: 60px;
+            }
+            .logo-informatika-header {
+                width: 80px;
+                height: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 2vh 1rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            p {
+                font-size: 0.9rem;
+            }
+            .cta-button {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            .logo-image {
+                width: 90px;
+                height: 90px;
+            }
+            .logo-upgris-header {
+                width: 40px;
+                height: 50px;
+            }
+            .logo-informatika-header {
+                width: 60px;
+                height: 20px;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans">
+
+    <div class="logo-header-container flex justify-center items-center space-x-6">
+        <img src="logo_upgris.png" alt="Logo UPGRIS" class="logo-upgris-header">
+        <img src="logo_informatika.png" alt="Logo Informatika" class="logo-informatika-header">
+    </div>
+
+    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+        SMART GARDEN
+    </h1>
+
+    <p class="text-lg md:text-2xl">
+        Sistem Penyiraman Otomatis Berbasis IoT
+    </p>
+
+    <img src="logo.png" alt="Logo Smart Garden" class="logo-image w-32 h-32 md:w-40 md:h-40 mx-auto transform transition-transform duration-500 hover:scale-110">
+    
+    <div class="mb-10 text-base md:text-xl">
+
+        <h2 class="font-semibold text-2xl md:text-3xl">Kelompok 3(4E)</h2>
+        <ul class="list-none p-0 m-0 space-y-2">
+            <li>Arif Alfian Choirul Anwar (23670119)</li>
+            <li>Kelvin Bintang Ardiansyah (23670148)</li>
+            <li>Alivia Nuraida (23670132)</li>
+            <li>Siti Muawanah (23670099)</li>
+        </ul>
+        <h2 class="font-semibold text-2xl md:text-3xl">Dosen Pembimbing:</h2>
+        <ul class="list-none p-0 m-0 space-y-2 mb-4">
+            <p class="text-lg md:text-2xl">Noora Qotrun Nada, S.T., M.Eng
+            </p>
+            <p class="matkul-text"> Internet of Things</p>
+    </div>
+    
+    <a href="monitor.html" class="cta-button inline-block text-white font-bold transition duration-300 ease-in-out">
+        MASUK KE MONITOR
+    </a>
+
+</body>
+>>>>>>> b40bf706749450e076df8a1e06d45a690e7fc3a4
 </html>
