@@ -119,10 +119,10 @@
     let lastPumpStatus = "...";
 
     function getSoilStatus(value) {
-      if (value >= 957) return "Sangat Kering";
+      if (value >= 950) return "Sangat Kering";
       else if (value >= 592) return "Kering";
-      else if (value >372= ) return "LEMBAP";
-      else return "Sangat lembap";
+      else if (value >= 372) return "Lembap";
+      else return "Sangat Lembap";
     }
 
     function updateMonitorStatus(isOnline) {
